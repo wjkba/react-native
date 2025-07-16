@@ -1,29 +1,43 @@
 import { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  ScrollView,
+} from "react-native";
 
 export default function App() {
-  const [enteredGoalText, setEnteredGoalText] = useState("");
+  const [enteredTodoText, setEnteredTodoText] = useState("");
+  const [todos, setTodos] = useState([]);
 
-  function goalInputHandler(enteredText) {
-    setEnteredGoalText(enteredText);
+  function todoInputHandler(enteredText) {
+    setEnteredTodoText(enteredText);
   }
 
-  function addGoalHandler() {
-    console.log(enteredGoalText);
+  function addTodoHandler() {
+    setTodos((currentTodos) => [...currentTodos, enteredTodoText]);
   }
 
   return (
     <View style={styles.appContainer}>
       <View style={styles.inputContainer}>
         <TextInput
-          onChangeText={goalInputHandler}
+          onChangeText={todoInputHandler}
           style={styles.textInput}
-          placeholder="Your course goal"
+          placeholder="New todo"
         />
-        <Button onPress={addGoalHandler} title="Add goal" />
+        <Button onPress={addTodoHandler} title="Add todo" />
       </View>
-      <View style={styles.goalsContainer}>
-        <Text>List of goals..</Text>
+      <View style={styles.todosContainer}>
+        <ScrollView alwaysBounceVertical={false}>
+          {todos.map((todo, i) => (
+            <View key={i} style={styles.todoItem}>
+              <Text style={styles.todoText}>{todo}</Text>
+            </View>
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
@@ -32,7 +46,7 @@ export default function App() {
 const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
-    paddingTop: 64,
+    paddingTop: 48,
     paddingHorizontal: 16,
   },
   inputContainer: {
@@ -42,8 +56,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
     marginBottom: 24,
-    borderBottomWidth: 1,
-    borderBottomColor: "#cccccc",
   },
   textInput: {
     width: "70%",
@@ -51,7 +63,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#cccccc",
   },
-  goalsContainer: {
+  todosContainer: {
     flex: 6,
+  },
+  todoItem: {
+    marginBottom: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: "hsla(0, 0%, 85%, 1.00)",
+    borderRadius: 8,
+  },
+  todoText: {
+    fontSize: 18,
   },
 });
