@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
     marginBottom: 24,
-    backgroundColor: "pink",
   },
   image: {
     width: "100%",
