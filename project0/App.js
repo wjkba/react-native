@@ -7,32 +7,50 @@ import {
   View,
   FlatList,
 } from "react-native";
+import TodoItem from "./components/TodoItem";
+import TodoInput from "./components/TodoInput";
 
 export default function App() {
-  const [enteredTodoText, setEnteredTodoText] = useState("");
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   const [todos, setTodos] = useState([]);
 
-  function todoInputHandler(enteredText) {
-    setEnteredTodoText(enteredText);
+  function startAddGoalHandler() {
+    setModalIsVisible(true);
   }
 
-  function addTodoHandler() {
+  function endAddGoalHandler() {
+    setModalIsVisible(false);
+  }
+
+  function addTodoHandler(enteredTodoText) {
     setTodos((currentTodos) => [
       ...currentTodos,
       { text: enteredTodoText, id: Math.random() },
     ]);
   }
 
+  function deleteGoalHandler(id) {
+    setTodos((currentTodos) => {
+      return currentTodos.filter((todo) => todo.id !== id);
+    });
+  }
+
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          onChangeText={todoInputHandler}
-          style={styles.textInput}
-          placeholder="New todo"
+      <View style={{ marginBottom: 12 }}>
+        <Button
+          onPress={startAddGoalHandler}
+          title="Add New Todo"
+          color="#00820dff"
         />
-        <Button onPress={addTodoHandler} title="Add todo" />
       </View>
+      {modalIsVisible && (
+        <TodoInput
+          visible={modalIsVisible}
+          onAddGoal={addTodoHandler}
+          onEndGoal={endAddGoalHandler}
+        />
+      )}
       <View style={styles.todosContainer}>
         {/* ScrollView is not perfect for lists, lists can become very long */}
         {/* ScrollView renders all of its child items, even when they are not yet visible */}
@@ -41,9 +59,11 @@ export default function App() {
           data={todos}
           renderItem={(itemData) => {
             return (
-              <View style={styles.todoItem}>
-                <Text style={styles.todoText}>{itemData.item.text}</Text>
-              </View>
+              <TodoItem
+                id={itemData.item.id}
+                text={itemData.item.text}
+                onDeleteItem={deleteGoalHandler}
+              />
             );
           }}
           keyExtractor={(item, index) => {
@@ -61,33 +81,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 48,
     paddingHorizontal: 16,
-  },
-  inputContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 8,
-    marginBottom: 24,
-  },
-  textInput: {
-    width: "70%",
-    paddingHorizontal: 8,
-    borderWidth: 1,
-    borderColor: "#cccccc",
+    backgroundColor: "hsla(0, 0%, 98%, 1.00)",
   },
   todosContainer: {
     flex: 6,
-  },
-  todoItem: {
-    marginBottom: 12,
-    paddingVertical: 14,
-    paddingHorizontal: 12,
-    borderWidth: 1,
-    borderColor: "hsla(0, 0%, 85%, 1.00)",
-    borderRadius: 8,
-  },
-  todoText: {
-    fontSize: 18,
   },
 });
