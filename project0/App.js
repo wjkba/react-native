@@ -5,7 +5,7 @@ import {
   Text,
   TextInput,
   View,
-  ScrollView,
+  FlatList,
 } from "react-native";
 
 export default function App() {
@@ -17,7 +17,10 @@ export default function App() {
   }
 
   function addTodoHandler() {
-    setTodos((currentTodos) => [...currentTodos, enteredTodoText]);
+    setTodos((currentTodos) => [
+      ...currentTodos,
+      { text: enteredTodoText, id: Math.random() },
+    ]);
   }
 
   return (
@@ -31,13 +34,23 @@ export default function App() {
         <Button onPress={addTodoHandler} title="Add todo" />
       </View>
       <View style={styles.todosContainer}>
-        <ScrollView alwaysBounceVertical={false}>
-          {todos.map((todo, i) => (
-            <View key={i} style={styles.todoItem}>
-              <Text style={styles.todoText}>{todo}</Text>
-            </View>
-          ))}
-        </ScrollView>
+        {/* ScrollView is not perfect for lists, lists can become very long */}
+        {/* ScrollView renders all of its child items, even when they are not yet visible */}
+        {/* That's why we should use FlatList here */}
+        <FlatList
+          data={todos}
+          renderItem={(itemData) => {
+            return (
+              <View style={styles.todoItem}>
+                <Text style={styles.todoText}>{itemData.item.text}</Text>
+              </View>
+            );
+          }}
+          keyExtractor={(item, index) => {
+            return item.id;
+          }}
+          alwaysBounceVertical={false}
+        />
       </View>
     </View>
   );
