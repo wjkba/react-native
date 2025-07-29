@@ -2,7 +2,9 @@ import { Alert, StyleSheet, Text, View } from "react-native";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Title from "../components/ui/Title";
 import { useEffect, useState } from "react";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import NumberContainer from "../components/game/NumberContainer";
+import Card from "../components/ui/Card";
 
 function generateRandomBetween(min, max, exclude) {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -52,8 +54,8 @@ function GameScreen({ userNumber, onGameOver }) {
   }
 
   return (
-    <View style={styles.screen}>
-      <View style={styles.textContainer}>
+    <Card>
+      <View>
         <Title>Opponent's Guess</Title>
         <NumberContainer>{currentGuess}</NumberContainer>
         <Text style={{ marginBottom: 16, textAlign: "center" }}>
@@ -62,14 +64,14 @@ function GameScreen({ userNumber, onGameOver }) {
       </View>
       <View style={styles.buttonContainer}>
         <PrimaryButton onPress={nextGuessHandler.bind(this, "higher")}>
-          Higher
+          <Ionicons name="add-circle-outline" size={24} />
         </PrimaryButton>
         <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
-          Lower
+          <Ionicons name="remove-circle-outline" size={24} />
         </PrimaryButton>
       </View>
-      <View>LOG ROUNDS</View>
-    </View>
+      <Text>LOG ROUNDS</Text>
+    </Card>
   );
 }
 
@@ -77,12 +79,6 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 16,
-  },
-  textContainer: {
-    backgroundColor: "white",
-    borderRadius: 8,
-    marginBottom: 16,
-    paddingVertical: 24,
   },
   buttonContainer: {
     gap: 4,

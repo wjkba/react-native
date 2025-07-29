@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: "center",
+    fontFamily: "open-sans",
   },
   //
   // Dedicated style for ios
