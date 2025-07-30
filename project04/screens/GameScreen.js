@@ -1,4 +1,11 @@
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Title from "../components/ui/Title";
 import { useEffect, useState } from "react";
@@ -23,6 +30,7 @@ function GameScreen({ userNumber, onGameOver }) {
   const initialGuess = generateRandomBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [guessRounds, setGuessRounds] = useState([initialGuess]);
+  const { width, height } = useWindowDimensions();
 
   useEffect(() => {
     if (currentGuess === userNumber) {
@@ -60,8 +68,8 @@ function GameScreen({ userNumber, onGameOver }) {
     setGuessRounds((prevGuessRounds) => [newRndNumber, ...prevGuessRounds]);
   }
 
-  return (
-    <Card>
+  let content = (
+    <>
       <View>
         <Title>Opponent's Guess</Title>
         <NumberContainer>{currentGuess}</NumberContainer>
@@ -84,8 +92,40 @@ function GameScreen({ userNumber, onGameOver }) {
           keyExtractor={(item) => item}
         />
       </View>
-    </Card>
+    </>
   );
+
+  if (width > 500) {
+    content = (
+      <>
+        <View>
+          <Title>Opponent's Guess</Title>
+          <View>
+            <View style={{ gap: 16 }}>
+              <PrimaryButton onPress={nextGuessHandler.bind(this, "higher")}>
+                <Ionicons name="add-circle-outline" size={24} />
+              </PrimaryButton>
+              <NumberContainer>{currentGuess}</NumberContainer>
+
+              <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
+                <Ionicons name="remove-circle-outline" size={24} />
+              </PrimaryButton>
+            </View>
+          </View>
+        </View>
+
+        <View>
+          <FlatList
+            data={guessRounds}
+            renderItem={(itemData) => <Text>{itemData.item}</Text>}
+            keyExtractor={(item) => item}
+          />
+        </View>
+      </>
+    );
+  }
+
+  return <Card>{content}</Card>;
 }
 
 const styles = StyleSheet.create({

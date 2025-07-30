@@ -1,24 +1,33 @@
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
-import Card from "../components/ui/Card";
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+} from "react-native";
 import Title from "../components/ui/Title";
 import PrimaryButton from "../components/ui/PrimaryButton";
 
 function GameOverScreen({ roundsNumber, userNumber, onStartNewGame }) {
   return (
-    <View style={styles.rootContainer}>
-      <Title>Game Over</Title>
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={require("../assets/images/krowa.jpg")}
-        />
+    <ScrollView>
+      <View style={styles.rootContainer}>
+        <Title>Game Over</Title>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={require("../assets/images/krowa.jpg")}
+          />
+        </View>
+        <Text style={styles.textContainer}>
+          Your phone needed <Text>{roundsNumber}</Text> rounds to guess the
+          number
+          <Text>{userNumber}</Text>.
+        </Text>
+        <PrimaryButton onPress={onStartNewGame}>Start a new game</PrimaryButton>
       </View>
-      <Text style={styles.textContainer}>
-        Your phone needed <Text>{roundsNumber}</Text> rounds to guess the number
-        <Text>{userNumber}</Text>.
-      </Text>
-      <PrimaryButton onPress={onStartNewGame}>Start a new game</PrimaryButton>
-    </View>
+    </ScrollView>
   );
 }
 

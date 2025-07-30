@@ -69,18 +69,21 @@ export default function App() {
   const paddingTopDistance = height < 380 ? 32 : 64;
 
   return (
-    <LinearGradient colors={["#e0f7fa", "#ffffff"]} style={styles.rootScreen}>
-      <ImageBackground
-        source={require("./assets/images/dices.jpg")}
-        resizeMode="cover"
-        style={{ flex: 1 }}
-        imageStyle={styles.backgroundImage}
-      >
-        <SafeAreaView style={{ paddingTop: paddingTopDistance, flex: 1 }}>
-          {screen}
-        </SafeAreaView>
-      </ImageBackground>
-    </LinearGradient>
+    <>
+      <StatusBar style="light" />
+      <LinearGradient colors={["#e0f7fa", "#ffffff"]} style={styles.rootScreen}>
+        <ImageBackground
+          source={require("./assets/images/dices.jpg")}
+          resizeMode="cover"
+          style={{ flex: 1 }}
+          imageStyle={styles.backgroundImage}
+        >
+          <SafeAreaView style={{ paddingTop: paddingTopDistance, flex: 1 }}>
+            {screen}
+          </SafeAreaView>
+        </ImageBackground>
+      </LinearGradient>
+    </>
   );
 }
 
