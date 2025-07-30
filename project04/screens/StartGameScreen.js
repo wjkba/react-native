@@ -2,6 +2,7 @@ import { StyleSheet, TextInput, View, Alert, Text } from "react-native";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import { useState } from "react";
 import Card from "../components/ui/Card";
+import Title from "../components/ui/Title";
 
 function StartGameScreen({ onPickNumber }) {
   const [enteredNumber, setEnteredNumber] = useState("");
@@ -33,6 +34,7 @@ function StartGameScreen({ onPickNumber }) {
   return (
     <Card>
       <View style={styles.numberInputContainer}>
+        <Title>New Game</Title>
         <Text>Enter number</Text>
         <TextInput
           style={styles.numberInput}
