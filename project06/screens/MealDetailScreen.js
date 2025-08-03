@@ -17,6 +17,7 @@ function MealDetailScreen({ route, navigation }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      title: selectedMeal.title,
       headerRight: () => {
         return <IconButton icon={"star"} onPress={headerButtonPressHandler} />;
       },
