@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
   details: {
     flexDirection: "row",
     alignItems: "center",
+    marginBottom: 8,
   },
   detailItem: {
     marginRight: 8,
