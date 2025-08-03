@@ -1,34 +1,42 @@
+import { Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import WelcomeScreen from "./screens/WelcomeScreen";
 import UserScreen from "./screens/UserScreen";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
-const BottomTab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <BottomTab.Navigator screenOptions={{ tabBarActiveTintColor: "green" }}>
-        <BottomTab.Screen
+      <Drawer.Navigator
+        initialRouteName="User"
+        screenOptions={{
+          drawerActiveBackgroundColor: "pink",
+          drawerActiveTintColor: "black",
+        }}
+      >
+        <Drawer.Screen
           name="Welcome"
           component={WelcomeScreen}
           options={{
-            tabBarIcon: ({ color, size }) => (
+            drawerLabel: "Welcome Screen",
+            drawerIcon: ({ color, size }) => (
               <MaterialIcons name="home" size={size} color={color} />
             ),
           }}
         />
-        <BottomTab.Screen
+        <Drawer.Screen
           name="User"
           component={UserScreen}
           options={{
-            tabBarIcon: ({ color, size }) => (
+            drawerIcon: ({ color, size }) => (
               <MaterialIcons name="person" size={size} color={color} />
             ),
           }}
         />
-      </BottomTab.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
