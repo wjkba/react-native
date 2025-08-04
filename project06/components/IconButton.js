@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, View } from "react-native";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 function IconButton({ icon, color = "black", onPress }) {
   return (
@@ -8,7 +8,7 @@ function IconButton({ icon, color = "black", onPress }) {
       onPress={onPress}
     >
       <View style={{ height: 24 }}>
-        <FontAwesome5 name={icon} size={24} />
+        <FontAwesome name={icon} size={24} />
       </View>
     </Pressable>
   );
