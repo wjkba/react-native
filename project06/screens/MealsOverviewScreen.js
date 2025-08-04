@@ -1,7 +1,8 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { MEALS, CATEGORIES } from "../data/dummy-data";
-import MealItem from "../components/MealItem";
+import MealItem from "../components/MealsList/MealItem";
 import { useEffect, useLayoutEffect } from "react";
+import MealsList from "../components/MealsList/MealsList";
 
 function MealsOverviewScreen({ route, navigation }) {
   // we get a route prop in every component that is registered as a screen in react navigation
@@ -25,27 +26,9 @@ function MealsOverviewScreen({ route, navigation }) {
     navigation.setOptions({ title: categoryTitle });
   }, [categoryId, navigation]);
 
-  function renderMealItem(itemData) {
-    const item = itemData.item;
-
-    const mealItemProps = {
-      id: item.id,
-      title: item.title,
-      imageUrl: item.imageUrl,
-      affordability: item.affordability,
-      complexity: item.complexity,
-      duration: item.duration,
-    };
-    return <MealItem {...mealItemProps} />;
-  }
-
   return (
     <View style={styles.container}>
-      <FlatList
-        data={displayedMeals}
-        keyExtractor={(meal) => meal.id}
-        renderItem={renderMealItem}
-      />
+      <MealsList items={displayedMeals} />
     </View>
   );
 }
